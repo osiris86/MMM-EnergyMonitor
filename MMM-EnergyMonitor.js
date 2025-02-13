@@ -218,17 +218,22 @@ Module.register("MMM-EnergyMonitor", {
         wrapper.appendChild(grid);
 
         // Battery Icon
-        const battery = document.createElement("div");
-        battery.className = "icon vertical bottom";
+        const batteryWrapper = document.createElement("div");
+        batteryWrapper.className = "icon vertical bottom";
+        batteryWrapper.style.display = "table"
 
         const batteryIcon = document.createElement("i");
         batteryIcon.className = this.config.iconCssClasses.energyStorage;
-        const batteryCharge = document.createElement("span")
-        batteryCharge.className = "battery-soc";
+        const batteryChargeWrapper = document.createElement("div")
+        batteryChargeWrapper.className = "battery-soc";
+        const batteryCharge = document.createElement("div")
         batteryCharge.innerHTML = `${this.currentData.battery_soc}%`;
-        battery.appendChild(batteryIcon);
-        battery.appendChild(batteryCharge);
-        wrapper.appendChild(battery);
+        batteryCharge.style.marginLeft = "5px";
+        batteryChargeWrapper.appendChild(batteryCharge);
+        batteryWrapper.appendChild(batteryIcon);
+        batteryWrapper.appendChild(batteryChargeWrapper);
+        wrapper.appendChild(batteryWrapper);
+        console.log("Height: " + batteryChargeWrapper.offsetHeight)
     },
 
     generateSolarLine: function() {

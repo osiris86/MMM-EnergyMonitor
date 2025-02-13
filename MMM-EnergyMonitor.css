@@ -190,8 +190,7 @@
 }
 
 #energymonitor-wrapper .battery-soc {
-  margin-left: 8px;
   font-size: 0.6em;
-  bottom: calc((var(--icon-size) / 2) - 9px);
-  position: absolute;
+  display: table-cell;
+  vertical-align: middle;
 }
