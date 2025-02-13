@@ -223,7 +223,19 @@ Module.register("MMM-EnergyMonitor", {
         batteryWrapper.style.display = "table"
 
         const batteryIcon = document.createElement("i");
-        batteryIcon.className = this.config.iconCssClasses.energyStorage;
+
+        if (this.currentData.battery_soc < 20) {
+            batteryIcon.className = "fas fa-battery-empty";
+        } else if (this.currentData.battery_soc < 40) {
+            batteryIcon.className = "fas fa-battery-quarter";
+        } else if (this.currentData.battery_soc < 60) {
+            batteryIcon.className = "fas fa-battery-half";
+        } else if (this.currentData.battery_soc < 80) {
+            batteryIcon.className = "fas fa-battery-three-quarters";
+        } else {
+            batteryIcon.className = "fas fa-battery-full";
+        }
+
         const batteryChargeWrapper = document.createElement("div")
         batteryChargeWrapper.className = "battery-soc";
         const batteryCharge = document.createElement("div")
