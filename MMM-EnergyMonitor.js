@@ -95,6 +95,7 @@ Module.register("MMM-EnergyMonitor", {
     start: function () {
         this.currentData = {
             battery: 0,
+            battery_soc: 0,
             home: 0,
             grid: 0,
             solar: 0
@@ -102,6 +103,7 @@ Module.register("MMM-EnergyMonitor", {
 
         this.resetCounter = {
             battery: 0,
+            battery_soc: 0,
             grid: 0,
             solar: 0
         };
@@ -221,7 +223,11 @@ Module.register("MMM-EnergyMonitor", {
 
         const batteryIcon = document.createElement("i");
         batteryIcon.className = this.config.iconCssClasses.energyStorage;
+        const batteryCharge = document.createElement("span")
+        batteryCharge.className = "battery-soc";
+        batteryCharge.innerHTML = `${this.currentData.battery_soc}%`;
         battery.appendChild(batteryIcon);
+        battery.appendChild(batteryCharge);
         wrapper.appendChild(battery);
     },
 
@@ -439,6 +445,15 @@ Module.register("MMM-EnergyMonitor", {
 
             this.currentData.solar = payload < 0 ? 0 : payload ;
             this.resetCounter.solar = 0;
+        }
+
+        // Unit: Percent | cannot be negative
+        if (notification === "MMM-EnergyMonitor_ENERGY_STORAGE_SOC_UPDATE") {
+            if(!this.validateNumberPayload(notification, payload, sender))
+                return;
+
+            this.currentData.battery_soc = payload;
+            this.resetCounter.battery_soc = 0
         }
     },
 });
